@@ -30,16 +30,17 @@ class Player {
   }
 }
 
+const platformImage = new Image();
+platformImage.src = "./assets/platform.png"
 class Platform {
   constructor({ x, y }) {
     this.position = { x, y };
     this.width = 200;
-    this.height = 20;
+    this.height = 50;
   }
   
   draw() {
-    c.fillStyle = "blue";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(platformImage,this.position.x, this.position.y, this.width, this.height);
   }
 }
 
@@ -61,7 +62,7 @@ function generateRandomBlock(count) {
   return blocks;
 }
 
-const platforms = generateRandomBlock(18);
+const platforms = generateRandomBlock(100);
 
 const keys = {
   right: { pressed: false },
