@@ -62,16 +62,33 @@ function generateRandomBlock(count) {
   return blocks;
 }
 
-const platforms = generateRandomBlock(100);
+const platforms = generateRandomBlock(43);
 
 const keys = {
   right: { pressed: false },
   left: { pressed: false }
 };
 
+const background = new Image();
+background.src = "./assets/background.png"
+
+const hillsImage = new Image();
+hillsImage.src = "./assets/hills.png";
+
+let hillsX = 0;
+
 function animate() {
   requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
+
+  c.drawImage(background,0,0,canvas.width, canvas.height);
+  c.drawImage(hillsImage, hillsX, canvas.height - 700, canvas.width * 7, 800);
+  c.drawImage(hillsImage, hillsX + canvas.width, canvas.height - 700, canvas.width  * 7, 800);
+
+  if(keys.right.pressed) hillsX -= 1;
+  if(keys.left.pressed) hillsX += 1;
+
+  if(hillsX <= -canvas.width) hillsX = 0;
+  // c.clearRect(0, 0, canvas.width, canvas.height);
   player.update();
   platforms.forEach((platform) => platform.draw());
 
