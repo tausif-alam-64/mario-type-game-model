@@ -64,6 +64,8 @@ function generateRandomBlock(count) {
 
 const platforms = generateRandomBlock(43);
 
+
+
 const keys = {
   right: { pressed: false },
   left: { pressed: false }
@@ -75,6 +77,11 @@ background.src = "./assets/background.png"
 const hillsImage = new Image();
 hillsImage.src = "./assets/hills.png";
 
+const groundImage = new Image();
+groundImage.src = "./assets/groundImage.png";
+
+const groundHeight = 80;
+
 let hillsX = 0;
 
 function animate() {
@@ -84,6 +91,9 @@ function animate() {
   c.drawImage(hillsImage, hillsX, canvas.height - 700, canvas.width * 7, 800);
   c.drawImage(hillsImage, hillsX + canvas.width, canvas.height - 700, canvas.width  * 7, 800);
 
+  for (let x = hillsX % canvas.width; x < canvas.width; x += canvas.width){
+    c.drawImage(groundImage, x, canvas.height - groundHeight, canvas.width, groundHeight);
+  }
   if(keys.right.pressed) hillsX -= 1;
   if(keys.left.pressed) hillsX += 1;
 
@@ -114,6 +124,11 @@ function animate() {
 
   if (!keys.right.pressed && !keys.left.pressed) {
     player.velocity.x = 0;
+  }
+
+  if(player.position.y + player.height >= canvas.height - groundHeight){
+    player.velocity.y = 0;
+    player.position.y = canvas.height - groundHeight - player.height;
   }
 
   platforms.forEach((platform) => {
